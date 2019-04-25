@@ -6,17 +6,17 @@ before_install:
   - docker build -t react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run react-test npm run test -- --coverage
+  - docker run react-test npm test -- --coverage
 
 after_success:
-  - docker build -t docker-complex/client ./client
-  - docker build -t docker-complex/nginx ./nginx
-  - docker build -t docker-complex/server ./server
-  - docker build -t docker-complex/worker ./worker
+  - docker build -t complex/docker-client ./client
+  - docker build -t complex/docker-nginx ./nginx
+  - docker build -t complex/docker-server ./server
+  - docker build -t complex/docker-worker ./worker
   #login docker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #push images to docker hub
-  - docker push docker-complex/client
-  - docker push docker-complex/nginx
-  - docker push docker-complex/server
-  - docker push docker-complex/worker
+  - docker push complex/docker-client
+  - docker push complex/docker-nginx
+  - docker push complex/docker-server
+  - docker push complex/docker-worker
