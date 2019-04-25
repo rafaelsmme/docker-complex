@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run react-test npm run test -- --coverage
+
+after_success:
+  - docker build -t docker-complex/client ./client
+  - docker build -t docker-complex/nginx ./nginx
+  - docker build -t docker-complex/server ./server
+  - docker build -t docker-complex/worker ./worker
+  #login docker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #push images to docker hub
+  - docker push docker-complex/client
+  - docker push docker-complex/nginx
+  - docker push docker-complex/server
+  - docker push docker-complex/worker
