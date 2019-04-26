@@ -9,14 +9,14 @@ script:
   - docker run complex/react-test npm run testCI
 
 after_success:
-  - docker build -t complex/docker-client ./client
-  - docker build -t complex/docker-nginx ./nginx
-  - docker build -t complex/docker-server ./server
-  - docker build -t complex/docker-worker ./worker
+  - docker build -t rafaelsm/docker-client ./client
+  - docker build -t rafaelsm/docker-nginx ./nginx
+  - docker build -t rafaelsm/docker-server ./server
+  - docker build -t rafaelsm/docker-worker ./worker
   #login docker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #push images to docker hub
-  - docker push complex/docker-client
-  - docker push complex/docker-nginx
-  - docker push complex/docker-server
-  - docker push complex/docker-worker
+  - docker push rafaelsm/docker-client
+  - docker push rafaelsm/docker-nginx
+  - docker push rafaelsm/docker-server
+  - docker push rafaelsm/docker-worker
